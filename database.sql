@@ -1,3 +1,4 @@
+--database
 -- Table 'users'
 CREATE TABLE users (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
