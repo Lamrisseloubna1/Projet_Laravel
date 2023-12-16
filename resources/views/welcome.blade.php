@@ -5,6 +5,6 @@
     <title>Votre titre ici</title>
 </head>
 <body>
-    <?php echo file_get_contents(public_path('index.html')); ?>
+    <?php echo file_get_contents(public_path('signin.html')); ?>
 </body>
 </html>
