@@ -55,3 +55,10 @@ CREATE TABLE team_user (
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (team_id) REFERENCES teams(id)
 );
+
+-- Remplir la table 'users'
+INSERT INTO users (name, email, password) VALUES
+    ('Ahmed Ali', 'ahmed@example.com', 'motdepasse123'),
+    ('Fatima Mohamed', 'fatima@example.com', 'motdepasse456'),
+    ('Youssef Ahmed', 'youssef@example.com', 'motdepasse789'),
+    ('Amina Hassan', 'amina@example.com', 'motdepasse101');
