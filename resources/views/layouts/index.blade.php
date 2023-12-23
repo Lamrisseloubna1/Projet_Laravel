@@ -490,10 +490,11 @@
                   </li>
                   <li role="separator" class="divider"></li>
                   <li>
-                    <a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                      <i class="ti-power-off mR-10"></i>
-                      <span>Logout</span>
-                    </a>
+            <a href="{{ route('logout') }}" onclick="logout(event)" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                <i class="ti-power-off mR-10"></i>
+                <span>Logout</span>
+            </a>
+       
                   </li>
                 </ul>
               </li>
@@ -501,6 +502,24 @@
           </div>
         </div>
 
+
+        <script>
+    function logout(event) {
+        event.preventDefault();
+        var form = document.createElement('form');
+        form.action = "{{ route('logout') }}";
+        form.method = 'POST';
+
+        var csrfToken = document.createElement('input');
+        csrfToken.type = 'hidden';
+        csrfToken.name = '_token';
+        csrfToken.value = '{{ csrf_token() }}';
+
+        form.appendChild(csrfToken);
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>
         <!-- ### $App Screen Content ### -->
         <main class="main-content bgc-grey-100">
           <div id="mainContent">
