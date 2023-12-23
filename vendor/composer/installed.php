@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'laravel/laravel',
-        'pretty_version' => 'dev-master',
-        'version' => 'dev-master',
-        'reference' => 'b6c0837352b7d7c364f5bbf3fcea41ef62b549f1',
+        'pretty_version' => 'v10.2.10',
+        'version' => '10.2.10.0',
+        'reference' => NULL,
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -380,9 +380,9 @@
             'dev_requirement' => false,
         ),
         'laravel/laravel' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
-            'reference' => 'b6c0837352b7d7c364f5bbf3fcea41ef62b549f1',
+            'pretty_version' => 'v10.2.10',
+            'version' => '10.2.10.0',
+            'reference' => NULL,
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -439,15 +439,6 @@
             'reference' => 'b936d415b252b499e8c3b1f795cd4fc20f57e1f3',
             'type' => 'library',
             'install_path' => __DIR__ . '/../laravel/tinker',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
-        'laravel/ui' => array(
-            'pretty_version' => 'v4.2.3',
-            'version' => '4.2.3.0',
-            'reference' => 'eb532ea096ca1c0298c87c19233daf011fda743a',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../laravel/ui',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
@@ -766,8 +757,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '3.0.0',
-                1 => '1.0|2.0|3.0',
+                0 => '1.0|2.0|3.0',
+                1 => '3.0.0',
             ),
         ),
         'psr/simple-cache' => array(
@@ -990,9 +981,9 @@
             'dev_requirement' => true,
         ),
         'spatie/laravel-ignition' => array(
-            'pretty_version' => '2.3.1',
-            'version' => '2.3.1.0',
-            'reference' => 'bf21cd15aa47fa4ec5d73bbc932005c70261efc8',
+            'pretty_version' => '2.3.2',
+            'version' => '2.3.2.0',
+            'reference' => '4800661a195e15783477d99f7f8f669a49793996',
             'type' => 'library',
             'install_path' => __DIR__ . '/../spatie/laravel-ignition',
             'aliases' => array(),
