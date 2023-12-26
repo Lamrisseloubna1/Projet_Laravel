@@ -1,6 +1,9 @@
 <?php
 
+
 namespace App\Http\Controllers;
+
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
 
@@ -30,8 +33,17 @@ class TaskController extends Controller
     public function show()
 
     {
-        $tasks = Task::all();
-        return view('tasks.show',['tasks' => $tasks]);
+        // Get the currently authenticated user
+         $user = Auth::user();
+
+        // Get tasks associated with the user
+        //  $tasks = $user->tasks;
+
+        // Get tasks associated with the user and eager load the 'team' relationship
+         $tasks = $user->tasks()->with('team')->get();
+
+    return view('tasks.show', ['tasks' => $tasks]);
+       
     }
 
     public function store(Request $request)
