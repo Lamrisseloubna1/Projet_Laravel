@@ -17,6 +17,7 @@ use App\Http\Controllers\TaskController;
 
 Route::get('/', function () {
     return view('home');
+  
 });
 
 Route::get('/logout', function () {

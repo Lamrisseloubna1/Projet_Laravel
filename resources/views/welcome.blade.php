@@ -5,6 +5,8 @@
     <title>Votre titre ici</title>
 </head>
 <body>
-    <?php echo file_get_contents(public_path('index.html')); ?>
+     
+    <?php echo file_get_contents(resource_path('views/layouts/index.blade.php')); ?>
+
 </body>
 </html>
