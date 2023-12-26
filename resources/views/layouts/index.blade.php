@@ -142,7 +142,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="sidebar-link" href="chat.html">
+              <a class="sidebar-link" href="{{ route('chat.index') }}">
                 <span class="icon-holder">
                   <i class="c-deep-purple-500 ti-comment-alt"></i>
                 </span>
