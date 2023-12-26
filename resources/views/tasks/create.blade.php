@@ -1,8 +1,5 @@
 <!-- resources/views/tasks/create.blade.php -->
 
-@extends('layouts.app')
-
-@section('content')
     <h1>Create Task</h1>
 
     <form action="{{ route('tasks.store') }}" method="post">
@@ -19,4 +16,3 @@
 
         <button type="submit">Create Task</button>
     </form>
-@endsection
