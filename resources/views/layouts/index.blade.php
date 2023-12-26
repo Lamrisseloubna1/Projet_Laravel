@@ -158,12 +158,13 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="sidebar-link" href="forms.html">
+            <a class="sidebar-link" href="{{ route('tasks.show') }}">
+
                 <span class="icon-holder">
                   <i class="c-light-blue-500 ti-pencil"></i>
                 </span>
-                <span class="title">Forms</span>
-              </a>
+                <span class="title">Tasks</span>
+            </a>
             </li>
             <li class="nav-item dropdown">
               <a class="sidebar-link" href="ui.html">
@@ -477,13 +478,13 @@
                     </a>
                   </li>
                   <li>
-                    <a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                    <a href="{{ route('profile') }}" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
                       <i class="ti-user mR-10"></i>
                       <span>Profile</span>
                     </a>
                   </li>
                   <li>
-                    <a href="email.html" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                    <a href="{{ route('chat')}}" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
                       <i class="ti-email mR-10"></i>
                       <span>Messages</span>
                     </a>
