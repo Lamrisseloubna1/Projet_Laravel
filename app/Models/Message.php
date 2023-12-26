@@ -1,11 +1,19 @@
-<?php
+<?php 
 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class Message extends Model
+class Message extends Model implements ShouldBroadcast
 {
     use HasFactory;
+
+    protected $fillable = ['user_id', 'team_id', 'content'];
+
+    public function broadcastOn()
+    {
+        return new PrivateChannel('chat');
+    }
 }

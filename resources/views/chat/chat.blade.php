@@ -726,5 +726,24 @@
         </footer>
       </div>
     </div>
+
+    <script>
+    // JavaScript pour envoyer des messages
+    document.getElementById('sendMessageBtn').addEventListener('click', function () {
+        const messageInput = document.getElementById('messageInput');
+        const content = messageInput.value;
+
+        // Envoyer le message via une requête Ajax
+        axios.post('/send-message', { content: content })
+            .then(response => {
+                console.log(response.data);
+                messageInput.value = ''; // Effacez le champ de saisie après l'envoi
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    });
+</script>
+
   </body>
 </html>
