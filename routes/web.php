@@ -36,6 +36,10 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('tasks', TaskController::class);
     Route::get('/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
     Route::get('/tasks/show', [TaskController::class, 'show'])->name('tasks.show');
+    // Route::put('/tasks/{task}/mark-completed', [TaskController::class, 'markCompleted'])
+    // ->name('tasks.markCompleted');
+    // Define the route for updating the status of a task
+    Route::patch('/tasks/{task}/update-status', [TaskController::class, 'updateStatus'])->name('tasks.updateStatus');
     Route::get('/chat', [App\Http\Controllers\ChatController::class,'index'])->name('chat');
     Route::post('/chat/send', [App\Http\Controllers\ChatController::class,'sendMessage'])->name('chat.sendMessage');
     Route::get('/chat/messages',  [App\Http\Controllers\ChatController::class,'getMesssage'])->name('chat.getMessage');

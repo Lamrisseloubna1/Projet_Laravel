@@ -11,6 +11,7 @@ use App\Models\Task;
 
 class TaskController extends Controller
 {
+   
 
 //     public function index()
 // {
@@ -35,16 +36,33 @@ class TaskController extends Controller
     {
         // Get the currently authenticated user
          $user = Auth::user();
-
-        // Get tasks associated with the user
-        //  $tasks = $user->tasks;
-
-        // Get tasks associated with the user and eager load the 'team' relationship
          $tasks = $user->tasks()->with('team')->get();
 
     return view('tasks.show', ['tasks' => $tasks]);
        
     }
+
+    public function updateStatus(Request $request, Task $task)
+    {
+        // Validate the request
+        $request->validate([
+            'status' => 'required|in:pending,completed,in_progress',
+        ]);
+
+        // Update the task status
+        $task->update(['status' => $request->status]);
+
+        // Redirect back with a success message
+        return redirect()->back()->with('success', 'Status updated successfully!');
+    }
+    // public function markCompleted(Task $task)
+    // {
+    //     // Add logic to mark the task as completed
+    //     $task->update(['status' => 'completed']);
+
+    //     // Redirect back or to the task list page
+    //     return redirect()->back()->with('success', 'Task marked as completed.');
+    // }
 
     public function store(Request $request)
     {
