@@ -6,80 +6,80 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <title>Forms</title>
     <style>
-      body {
-        margin-top: 20px;
-        font-family: 'Arial', sans-serif;
-        background-color: #f8f9fa;
-    }
+         body {
+            margin-top: 20px;
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+        }
 
-    h1 {
-        text-align: center;
-        color: #2aa493;
-    }
+        h1 {
+            text-align: center;
+            color: #2aa493;
+        }
 
-    .table {
-        border-collapse: collapse;
-        width: 100%;
-        margin-bottom: 20px;
-        border: 1px solid #ddd;
-        background-color: #fff;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        border-radius: 10px;
-        overflow: hidden;
-    }
+        .table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
 
-    .table th,
-    .table td {
-        border: 1px solid #ddd;
-        padding: 12px;
-        text-align: center;
-        background-color: #f5f5f5;
-        color: #333;
-    }
+        .table th,
+        .table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+            background-color: #f5f5f5;
+            color: #333;
+        }
 
-    .table th {
-        position: relative;
-        font-weight: bold;
-        background-color: #2aa493;
-        color: #fff;
-    }
+        .table th {
+            position: relative;
+            font-weight: bold;
+            background-color: #2aa493;
+            color: #fff;
+        }
 
-    .table th span {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-left: 5px;
-    }
+        .table th span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 5px;
+        }
 
-    .table th i {
-        margin-right: 5px;
-    }
+        .table th i {
+            margin-right: 5px;
+        }
 
-    .table-hover tbody tr:hover {
-        background-color: #d4edda;
-    }
+        .table-hover tbody tr:hover {
+            background-color: #d4edda;
+        }
 
-    .user-link {
-        display: flex;
-        align-items: center;
-        font-weight: bold;
-        color: #2aa493;
-        text-decoration: none;
-        transition: color 0.3s ease;
-    }
+        .user-link {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            color: #2aa493;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
 
-    .user-link:hover {
-        color: #155724;
-    }
+        .user-link:hover {
+            color: #155724;
+        }
 
-    .status-icon {
-        font-size: 1.2em;
-        margin-right: 5px;
-    }
+        .status-icon {
+            font-size: 1.2em;
+            margin-right: 5px;
+        }
 
-    .checkbox-container {
-        text-align: center;
-    }
+        .checkbox-container {
+            text-align: center;
+        }
       #loader {
         transition: all 0.3s ease-in-out;
         opacity: 1;
@@ -130,13 +130,7 @@
       }
     </style>
   <script defer="defer" src="main.js"></script></head>
-  <body class="app">
-    
-    
-    
-
-    
-    
+  <body class="app"> 
     <div id="loader">
       <div class="spinner"></div>
     </div>
@@ -234,11 +228,11 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="sidebar-link" href="forms.html">
+              <a class="sidebar-link" href="{{ route('tasks.show') }}">
                 <span class="icon-holder">
                   <i class="c-light-blue-500 ti-pencil"></i>
                 </span>
-                <span class="title">Forms</span>
+                <span class="title">Tasks</span>
               </a>
             </li>
             <li class="nav-item dropdown">
@@ -575,10 +569,10 @@
               </li>
             </ul>
           </div>
-        </div>
 
-        <div class="container">
-        <div class="row">
+      <center>    
+      <div class="container">  
+      <div class="row">
             <div class="col-lg-12">
                 <div class="main-box clearfix">
                     <div class="table-responsive">
@@ -663,10 +657,18 @@
             </div>
         </div>
     </div>
-        <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600">
+    </center>
+   
+        </div>
+
+            
+       
+      </div>
+    
+    </div>
+    
+    <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600">
           <span>Copyright © 2021 Designed by <a href="https://colorlib.com" target="_blank" title="Colorlib">Colorlib</a>. All rights reserved.</span>
         </footer>
-      </div>
-    </div>
   </body>
 </html>
