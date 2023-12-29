@@ -25,7 +25,6 @@ class TaskController extends Controller
     //     $tasks = Task::all();
     //     return view('tasks.index', compact('tasks'));
     // }
-
     public function create()
     {
         return view('tasks.create');
@@ -34,14 +33,15 @@ class TaskController extends Controller
     public function show()
 
     {
+       
         // Get the currently authenticated user
-         $user = Auth::user();
+        $user = Auth::user();
          $tasks = $user->tasks()->with('team')->get();
 
-    return view('tasks.show', ['tasks' => $tasks]);
+    return view('tasks.forms', ['tasks' => $tasks]);
        
     }
-
+    
     public function updateStatus(Request $request, Task $task)
     {
         // Validate the request
