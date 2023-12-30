@@ -19,6 +19,8 @@ class Task extends Model
         return $this->belongsTo(Team::class);
     }
 
+    
+
     // Define the relationship where a task is assigned to a user
     public function assignedUser()
     {

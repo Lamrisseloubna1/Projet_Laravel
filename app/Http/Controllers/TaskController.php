@@ -32,18 +32,35 @@ class TaskController extends Controller
     // }
     
     }*/
+
+    
     public function create()
-    {
-        $user = Auth::user();
+{
+    $user = Auth::user();
 
-        // Check if the user is an admin and has a team
-        if ($user->is_admin && $user->team) {
-            // Retrieve tasks related to the team members
-            $tasks = Task::where('team_id', $user->team->id)->with('assignedUser')->get();
+    // Check if the user is an admin and has a team
+    if ($user->is_admin && $user->team) {
+        // Debugging: Dump the team ID and die
+        dd($user->team->id);
 
-            return view('tasks.create', ['tasks' => $tasks]);
-        }
+        // Retrieve tasks related to the team members
+        $tasks = Task::where('team_id', $user->team->id)->with('assignedUser')->get();
+
+        return view('tasks.create', ['tasks' => $tasks, 'admin' => $admin]);
     }
+}
+//     public function create()
+// {
+//     $user = Auth::user();
+
+//     // Check if the user is an admin and has a team
+//     if ($user->is_admin && $user->team) {
+//         // Retrieve tasks related to the team members
+//         $tasks = Task::where('team_id', $user->team->id)->get();
+
+//         return view('tasks.create', ['tasks' => $tasks]);
+//     }
+// }
     
     
     public function edit(Task $task)
