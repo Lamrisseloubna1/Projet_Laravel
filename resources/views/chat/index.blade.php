@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
     <title>Chat</title>
+    <script src="{{ asset('js/echo.js') }}" defer></script>
     <style>
       #loader {
         transition: all 0.3s ease-in-out;
@@ -639,33 +640,15 @@
                               <div class="layer">
                                 <div class="peers fxw-nw ai-c pY-3 pX-10 bgc-white bdrs-2 lh-3/2">
                                   <div class="peer mR-10">
-                                    <small>10:00 AM</small>
+                                    <small>@{{ message.created_at }}AM</small>
                                   </div>
                                   <div class="peer-greed">
-                                    <span>Lorem Ipsum is simply dummy text of</span>
+                                    <span>@{{ message.content }}</span>
                                   </div>
                                 </div>
                               </div>
-                              <div class="layer">
-                                <div class="peers fxw-nw ai-c pY-3 pX-10 bgc-white bdrs-2 lh-3/2">
-                                  <div class="peer mR-10">
-                                    <small>10:00 AM</small>
-                                  </div>
-                                  <div class="peer-greed">
-                                    <span>the printing and typesetting industry.</span>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="layer">
-                                <div class="peers fxw-nw ai-c pY-3 pX-10 bgc-white bdrs-2 lh-3/2">
-                                  <div class="peer mR-10">
-                                    <small>10:00 AM</small>
-                                  </div>
-                                  <div class="peer-greed">
-                                    <span>Lorem Ipsum has been the industry's</span>
-                                  </div>
-                                </div>
-                              </div>
+                              
+                              
                             </div>
                           </div>
                         </div>
@@ -680,22 +663,14 @@
                               <div class="layer">
                                 <div class="peers fxw-nw ai-c pY-3 pX-10 bgc-white bdrs-2 lh-3/2">
                                   <div class="peer mL-10 ord-1">
-                                    <small>10:00 AM</small>
+                                    <small>@{{ message.created_at }}</small>
                                   </div>
                                   <div class="peer-greed ord-0">
-                                    <span>Heloo</span>
+                                    <span>@{{ message.content }}</span>
                                   </div>
                                 </div>
                               </div>
-                              <div class="layer">
-                                <div class="peers fxw-nw ai-c pY-3 pX-10 bgc-white bdrs-2 lh-3/2">
-                                  <div class="peer mL-10 ord-1">
-                                    <small>10:00 AM</small>
-                                  </div>
-                                  <div class="peer-greed ord-0">
-                                    <span>??</span>
-                                  </div>
-                              </div>
+                             
                             </div>
                           </div>
                         </div>
@@ -706,8 +681,8 @@
                       
                       <div class="p-20 bdT bgc-white">
                         <div class="pos-r">
-                          <input type="text" class="form-control bdrs-10em m-0" placeholder="Say something...">
-                          <button type="button" class="btn btn-primary bdrs-50p w-2r p-0 h-2r pos-a r-1 t-1 btn-color">
+                          <input v-model="newMessage" @keyup.enter="sendMessage" type="text" class="form-control bdrs-10em m-0" placeholder="Say something...">
+                          <button  @click="sendMessage" id="SubmitButton" type="button" class="btn btn-primary bdrs-50p w-2r p-0 h-2r pos-a r-1 t-1 btn-color">
                             <i class="fa fa-paper-plane-o"></i>
                           </button>
                         </div>
@@ -727,7 +702,7 @@
       </div>
     </div>
 
-    <script>
+    <!-- <script>
     // JavaScript pour envoyer des messages
     document.getElementById('sendMessageBtn').addEventListener('click', function () {
         const messageInput = document.getElementById('messageInput');
@@ -743,7 +718,56 @@
                 console.error(error);
             });
     });
-</script>
+</script> -->
+<script>
+    new Vue({
+        el: '#chat-app',
+        data: {
+            messages: [],      // Tableau pour stocker les messages
+            newMessage: '',    // Nouveau message en cours de saisie
+            errors: [],        // Tableau pour stocker les erreurs de validation
+        },
+        mounted() {
+            // Initialiser l'écoute des événements
+            window.Echo.channel('chat')
+                .listen('MessageSent', (event) => {
+                    this.messages.push(event.message);
+                });
 
+            // Charger les messages initiaux lors du montage
+            this.loadMessages();
+        },
+        methods: {
+            loadMessages() {
+                // Logique pour récupérer les messages
+                axios.get('/chat/messages')
+                    .then(response => {
+                        this.messages = response.data.messages;
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors du chargement des messages:', error);
+                    });
+            },
+            sendMessage() {
+                // Envoyer le message au serveur
+                axios.post('/chat', { message: this.newMessage })
+                    .then(response => {
+                        // Réinitialiser l'entrée du message après l'envoi réussi
+                        this.newMessage = '';
+                        // Charger à nouveau les messages pour mettre à jour l'affichage
+                        this.loadMessages();
+                    })
+                    .catch(error => {
+                        // Gérer les erreurs de validation
+                        if (error.response && error.response.status === 422) {
+                            this.errors = Object.values(error.response.data.errors).flat();
+                        } else {
+                            console.error('Erreur lors de l\'envoi du message:', error);
+                        }
+                    });
+            }
+        }
+    });
+</script>
   </body>
 </html>
