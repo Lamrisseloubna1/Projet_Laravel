@@ -43,4 +43,26 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+<<<<<<< branchR
+=======
+
+    public function teams()
+    {
+        return $this->hasMany(Team::class, 'admin');
+    }
+    
+    public function tasks()
+    {
+        return $this->hasMany(Task::class, 'assigned_to');
+    }
+   
+
+    // public function team()
+    // {
+    //     return $this->belongsTo(Team::class, 'admin');
+    // }
+  
+>>>>>>> local
 }
+   
+
