@@ -3,8 +3,83 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-    <title>Chat</title>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <title>Forms</title>
     <style>
+         body {
+            margin-top: 20px;
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2aa493;
+        }
+
+        .table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .table th,
+        .table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .table th {
+            position: relative;
+            font-weight: bold;
+            background-color: #2aa493;
+            color: #fff;
+        }
+
+        .table th span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 5px;
+        }
+
+        .table th i {
+            margin-right: 5px;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: #d4edda;
+        }
+
+        .user-link {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            color: #2aa493;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .user-link:hover {
+            color: #155724;
+        }
+
+        .status-icon {
+            font-size: 1.2em;
+            margin-right: 5px;
+        }
+
+        .checkbox-container {
+            text-align: center;
+        }
       #loader {
         transition: all 0.3s ease-in-out;
         opacity: 1;
@@ -55,13 +130,7 @@
       }
     </style>
   <script defer="defer" src="main.js"></script></head>
-  <body class="app">
-    
-    
-    
-
-    
-    
+  <body class="app"> 
     <div id="loader">
       <div class="spinner"></div>
     </div>
@@ -159,11 +228,11 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="sidebar-link" href="forms.html">
+              <a class="sidebar-link" href="{{ route('tasks.show') }}">
                 <span class="icon-holder">
                   <i class="c-light-blue-500 ti-pencil"></i>
                 </span>
-                <span class="title">Forms</span>
+                <span class="title">Tasks</span>
               </a>
             </li>
             <li class="nav-item dropdown">
@@ -225,7 +294,7 @@
               <ul class="dropdown-menu">
                 <li>
                   <a class="sidebar-link" href="blank.html">Blank</a>
-                </li> 
+                </li>                 
                 <li>
                   <a class="sidebar-link" href="404.html">404</a>
                 </li>
@@ -500,231 +569,106 @@
               </li>
             </ul>
           </div>
+
+      <center>    
+      <div class="container">  
+      <div class="row">
+            <div class="col-lg-12">
+                <div class="main-box clearfix">
+                    <div class="table-responsive">
+                        <table class="table user-list">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">
+                                        <span><i class="fa fa-tasks status-icon"></i> Task</span>
+                                    </th>
+                                    <th class="text-center">
+                                        <span><i class="fa fa-info-circle status-icon"></i> Status</span>
+                                    </th>
+                                    <th class="text-center">
+                                        <span><i class="fa fa-align-left status-icon"></i> Description</span>
+                                    </th>
+                                    <th class="text-center">
+                                        <span><i class="fa fa-clock-o status-icon"></i> Due Date</span>
+                                    </th>
+                                    <th class="text-center">
+                                        <span><i class="fa fa-users status-icon"></i> Team</span>
+                                    </th>
+                                    <th class="text-center">
+                                        <span><i class="fa fa-calendar status-icon"></i> Created at</span>
+                                    </th>
+                                    <th class="text-center">
+                                        <span><i class="fa fa-refresh status-icon"></i> Updated at</span>
+                                    </th>
+                                    <th class="text-center">
+                                        <span><i class="fa fa-check-square status-icon"></i> Select status</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($tasks as $task)
+                                <tr>
+                                    <td class="user-link">
+                                        {{ $task->title }}
+                                    </td>
+                                    <td>
+                                        {{ $task->status }}
+                                       
+                                        <!-- Display the actual status -->
+                                         <!-- {{ ucfirst($task->status) }} -->
+       
+                                    </td>
+                                    <td>
+                                        {{ $task->description }}
+                                    </td>
+                                    <td>
+                                        {{ $task->due_date }}
+                                    </td>
+                                    <td>
+                                        {{ $task->team->name ?? 'N/A' }}
+                                    </td>
+                                    <td>
+                                        {{ $task->created_at }}
+                                    </td>
+                                    <td>
+                                        {{ $task->updated_at }}
+                                    </td>
+                                    <td class="checkbox-container">
+                                         <!-- Add a form to update the task status -->
+                                        <form method="post" action="{{ route('tasks.updateStatus', ['task' => $task]) }}">
+                                          @csrf
+                                          @method('patch')
+                                           <select name="status" onchange="this.form.submit()">
+                                           @foreach(['pending', 'completed', 'in_progress'] as $status)
+                                                <option value="{{ $status }}" {{ $task->status === $status ? 'selected' : '' }}>
+                                                    {{ ucfirst($status) }}
+                                                </option>
+                                            @endforeach
+                                            </select>
+                                        </form>
+                                        
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </center>
+   
         </div>
 
-        <!-- ### $App Screen Content ### -->
-        <main class="main-content bgc-grey-100">
-          <div id="mainContent">
-            <div class="full-container">
-              <div class="peers fxw-nw pos-r">
-                
-                <div class="peer bdR" id="chat-sidebar">
-                  <div class="layers h-100">
-                    
-                    <div class="bdB layer w-100">
-                      <input type="text" placeholder="Search contacts..." name="chatSearch" class="form-constrol p-15 bdrs-0 w-100 bdw-0">
-                    </div>
-
-                    
-                    <div class="layer w-100 fxg-1 scrollable pos-r">
-                      <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p">
-                        <div class="peer">
-                          <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="" class="w-3r h-3r bdrs-50p">
-                        </div>
-                        <div class="peer peer-greed pL-20">
-                          <h6 class="mB-0 lh-1 fw-400">John Doe</h6>
-                          <small class="lh-1 c-green-500">Online</small>
-                        </div>
-                      </div>
-                      <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p">
-                        <div class="peer">
-                          <img src="https://randomuser.me/api/portraits/men/2.jpg" alt="" class="w-3r h-3r bdrs-50p">
-                        </div>
-                        <div class="peer peer-greed pL-20">
-                          <h6 class="mB-0 lh-1 fw-400">Moo Doe</h6>
-                          <small class="lh-1 c-amber-500">Away</small>
-                        </div>
-                      </div>
-                      <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p">
-                        <div class="peer">
-                          <img src="https://randomuser.me/api/portraits/men/3.jpg" alt="" class="w-3r h-3r bdrs-50p">
-                        </div>
-                        <div class="peer peer-greed pL-20">
-                          <h6 class="mB-0 lh-1 fw-400">Adam Jones</h6>
-                          <small class="lh-1 c-grey-500">Offline</small>
-                        </div>
-                      </div>
-                      <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p">
-                        <div class="peer">
-                          <img src="https://randomuser.me/api/portraits/men/4.jpg" alt="" class="w-3r h-3r bdrs-50p">
-                        </div>
-                        <div class="peer peer-greed pL-20">
-                          <h6 class="mB-0 lh-1 fw-400">Mizo Doe</h6>
-                          <small class="lh-1 c-red-500">Busy</small>
-                        </div>
-                      </div>
-                      <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p">
-                        <div class="peer">
-                          <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="" class="w-3r h-3r bdrs-50p">
-                        </div>
-                        <div class="peer peer-greed pL-20">
-                          <h6 class="mB-0 lh-1 fw-400">John Doe</h6>
-                          <small class="lh-1 c-green-500">Online</small>
-                        </div>
-                      </div>
-                      <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p">
-                        <div class="peer">
-                          <img src="https://randomuser.me/api/portraits/men/2.jpg" alt="" class="w-3r h-3r bdrs-50p">
-                        </div>
-                        <div class="peer peer-greed pL-20">
-                          <h6 class="mB-0 lh-1 fw-400">Moo Doe</h6>
-                          <small class="lh-1 c-amber-500">Away</small>
-                        </div>
-                      </div>
-                      <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p">
-                        <div class="peer">
-                          <img src="https://randomuser.me/api/portraits/men/3.jpg" alt="" class="w-3r h-3r bdrs-50p">
-                        </div>
-                        <div class="peer peer-greed pL-20">
-                          <h6 class="mB-0 lh-1 fw-400">Adam Jones</h6>
-                          <small class="lh-1 c-grey-500">Offline</small>
-                        </div>
-                      </div>
-                      <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p">
-                        <div class="peer">
-                          <img src="https://randomuser.me/api/portraits/men/4.jpg" alt="" class="w-3r h-3r bdrs-50p">
-                        </div>
-                        <div class="peer peer-greed pL-20">
-                          <h6 class="mB-0 lh-1 fw-400">Mizo Doe</h6>
-                          <small class="lh-1 c-red-500">Busy</small>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                
-                <div class="peer peer-greed" id="chat-box">
-                  <div class="layers h-100">
-                    <div class="layer w-100">
-                      
-                      <div class="peers fxw-nw jc-sb ai-c pY-20 pX-30 bgc-white">
-                        <div class="peers ai-c">
-                          <div class="peer d-n@md+">
-                            <a href="" title="" id="chat-sidebar-toggle" class="td-n c-grey-900 cH-blue-500 mR-30">
-                              <i class="ti-menu"></i>
-                            </a>
-                          </div>
-                          <div class="peer mR-20">
-                            <img src="https://randomuser.me/api/portraits/men/12.jpg" alt="" class="w-3r h-3r bdrs-50p">
-                          </div>
-                          <div class="peer">
-                            <h6 class="lh-1 mB-0">John Doe</h6>
-                            <i class="fsz-sm lh-1">Typing...</i>
-                          </div>
-                        </div>
-                        <div class="peers">
-                          <a href="" class="peer td-n c-grey-900 cH-blue-500 fsz-md mR-30" title="">
-                            <i class="ti-video-camera"></i>
-                          </a>
-                          <a href="" class="peer td-n c-grey-900 cH-blue-500 fsz-md mR-30" title="">
-                            <i class="ti-headphone"></i>
-                          </a>
-                          <a href="" class="peer td-n c-grey-900 cH-blue-500 fsz-md" title="">
-                            <i class="ti-more"></i>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="layer w-100 fxg-1 bgc-grey-200 scrollable pos-r">
-                      
-                      <div class="p-20 gapY-15">
-                        
-                        <div class="peers fxw-nw">
-                          <div class="peer mR-20">
-                            <img class="w-2r bdrs-50p" src="https://randomuser.me/api/portraits/men/11.jpg" alt="">
-                          </div>
-                          <div class="peer peer-greed">
-                            <div class="layers ai-fs gapY-5">
-                              <div class="layer">
-                                <div class="peers fxw-nw ai-c pY-3 pX-10 bgc-white bdrs-2 lh-3/2">
-                                  <div class="peer mR-10">
-                                    <small>10:00 AM</small>
-                                  </div>
-                                  <div class="peer-greed">
-                                    <span>Lorem Ipsum is simply dummy text of</span>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="layer">
-                                <div class="peers fxw-nw ai-c pY-3 pX-10 bgc-white bdrs-2 lh-3/2">
-                                  <div class="peer mR-10">
-                                    <small>10:00 AM</small>
-                                  </div>
-                                  <div class="peer-greed">
-                                    <span>the printing and typesetting industry.</span>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="layer">
-                                <div class="peers fxw-nw ai-c pY-3 pX-10 bgc-white bdrs-2 lh-3/2">
-                                  <div class="peer mR-10">
-                                    <small>10:00 AM</small>
-                                  </div>
-                                  <div class="peer-greed">
-                                    <span>Lorem Ipsum has been the industry's</span>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        
-                        <div class="peers fxw-nw ai-fe">
-                          <div class="peer ord-1 mL-20">
-                            <img class="w-2r bdrs-50p" src="https://randomuser.me/api/portraits/men/12.jpg" alt="">
-                          </div>
-                          <div class="peer peer-greed ord-0">
-                            <div class="layers ai-fe gapY-10">
-                              <div class="layer">
-                                <div class="peers fxw-nw ai-c pY-3 pX-10 bgc-white bdrs-2 lh-3/2">
-                                  <div class="peer mL-10 ord-1">
-                                    <small>10:00 AM</small>
-                                  </div>
-                                  <div class="peer-greed ord-0">
-                                    <span>Heloo</span>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="layer">
-                                <div class="peers fxw-nw ai-c pY-3 pX-10 bgc-white bdrs-2 lh-3/2">
-                                  <div class="peer mL-10 ord-1">
-                                    <small>10:00 AM</small>
-                                  </div>
-                                  <div class="peer-greed ord-0">
-                                    <span>??</span>
-                                  </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    </div>
-                    <div class="layer w-100">
-                      
-                      <div class="p-20 bdT bgc-white">
-                        <div class="pos-r">
-                          <input type="text" class="form-control bdrs-10em m-0" placeholder="Say something...">
-                          <button type="button" class="btn btn-primary bdrs-50p w-2r p-0 h-2r pos-a r-1 t-1 btn-color">
-                            <i class="fa fa-paper-plane-o"></i>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </main>
-
-        <!-- ### $App Screen Footer ### -->
-        <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600">
+            
+       
+      </div>
+    
+    </div>
+    
+    <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600">
           <span>Copyright © 2021 Designed by <a href="https://colorlib.com" target="_blank" title="Colorlib">Colorlib</a>. All rights reserved.</span>
         </footer>
-      </div>
-    </div>
   </body>
 </html>

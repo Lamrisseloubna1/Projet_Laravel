@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_admin',
     ];
 
     /**
@@ -43,26 +44,25 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-<<<<<<< branchR
-=======
+
+    public function tasks()
+    {
+    return $this->hasMany(Task::class, 'assigned_to');
+    }
+
+
+    public function team()
+    {
+    return $this->belongsTo(Team::class);
+    }
 
     public function teams()
     {
-        return $this->hasMany(Team::class, 'admin');
+        return $this->belongsToMany(Team::class);
     }
     
-    public function tasks()
+    public function messages()
     {
-        return $this->hasMany(Task::class, 'assigned_to');
+        return $this->hasMany(Message::class);
     }
-   
-
-    // public function team()
-    // {
-    //     return $this->belongsTo(Team::class, 'admin');
-    // }
-  
->>>>>>> local
 }
-   
-

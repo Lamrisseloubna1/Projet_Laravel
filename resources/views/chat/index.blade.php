@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-    <title>Compose</title>
+    <title>Chat</title>
+    <script src="{{ asset('js/echo.js') }}" defer></script>
     <style>
       #loader {
         transition: all 0.3s ease-in-out;
@@ -225,7 +226,7 @@
               <ul class="dropdown-menu">
                 <li>
                   <a class="sidebar-link" href="blank.html">Blank</a>
-                </li>
+                </li> 
                 <li>
                   <a class="sidebar-link" href="404.html">404</a>
                 </li>
@@ -506,128 +507,189 @@
         <main class="main-content bgc-grey-100">
           <div id="mainContent">
             <div class="full-container">
-              <div class="email-app">
-              <div class="email-side-nav remain-height ov-h">
-                <div class="h-100 layers">
-                  <div class="p-20 bgc-grey-100 layer w-100">
-                    <a href="compose.html" class="btn btn-danger d-grid">New Message</a>
-                  </div>
-                  <div class="scrollable pos-r bdT layer w-100 fxg-1">
-                    <ul class="p-20 nav flex-column">
-                      <li class="nav-item">
-                        <a href="javascript:void(0)" class="nav-link c-grey-800 cH-blue-500 actived">
-                          <div class="peers ai-c jc-sb">
-                            <div class="peer peer-greed">
-                              <i class="mR-10 ti-email"></i>
-                              <span>Inbox</span>
-                            </div>
-                            <div class="peer">
-                              <span class="badge rounded-pill bgc-deep-purple-50 c-deep-purple-700">+99</span>
-                            </div>
-                          </div>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a href="" class="nav-link c-grey-800 cH-blue-500">
-                          <div class="peers ai-c jc-sb">
-                            <div class="peer peer-greed">
-                              <i class="mR-10 ti-share"></i>
-                              <span>Sent</span>
-                            </div>
-                            <div class="peer">
-                              <span class="badge rounded-pill bgc-green-50 c-green-700">12</span>
-                            </div>
-                          </div>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a href="" class="nav-link c-grey-800 cH-blue-500">
-                          <div class="peers ai-c jc-sb">
-                            <div class="peer peer-greed">
-                              <i class="mR-10 ti-star"></i>
-                              <span>Important</span>
-                            </div>
-                            <div class="peer">
-                              <span class="badge rounded-pill bgc-blue-50 c-blue-700">3</span>
-                            </div>
-                          </div>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a href="" class="nav-link c-grey-800 cH-blue-500">
-                          <div class="peers ai-c jc-sb">
-                            <div class="peer peer-greed">
-                              <i class="mR-10 ti-file"></i>
-                              <span>Drafts</span>
-                            </div>
-                            <div class="peer">
-                              <span class="badge rounded-pill bgc-amber-50 c-amber-700">5</span>
-                            </div>
-                          </div>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a href="" class="nav-link c-grey-800 cH-blue-500">
-                          <div class="peers ai-c jc-sb">
-                            <div class="peer peer-greed">
-                              <i class="mR-10 ti-alert"></i>
-                              <span>Spam</span>
-                            </div>
-                            <div class="peer">
-                              <span class="badge rounded-pill bgc-red-50 c-red-700">1</span>
-                            </div>
-                          </div>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a href="" class="nav-link c-grey-800 cH-blue-500">
-                          <div class="peers ai-c jc-sb">
-                            <div class="peer peer-greed">
-                              <i class="mR-10 ti-trash"></i>
-                              <span>Trash</span>
-                            </div>
-                            <div class="peer">
-                              <span class="badge rounded-pill bgc-red-50 c-red-700">+99</span>
-                            </div>
-                          </div>
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div class="email-wrapper row remain-height pos-r scrollable bgc-white">
-                <div class="email-content open no-inbox-view">
-                  <div class="email-compose">
-                    <div class="d-n@md+ p-20">
-                      <a class="email-side-toggle c-grey-900 cH-blue-500 td-n" href="javascript:void(0)">
-                        <i class="ti-menu"></i>
-                      </a>
+              <div class="peers fxw-nw pos-r">
+                
+                <div class="peer bdR" id="chat-sidebar">
+                  <div class="layers h-100">
+                    
+                    <div class="bdB layer w-100">
+                      <input type="text" placeholder="Search contacts..." name="chatSearch" class="form-constrol p-15 bdrs-0 w-100 bdw-0">
                     </div>
-                    <form class="email-compose-body">
-                      <h4 class="c-grey-900 mB-20">Send Message</h4>
-                      <div class="send-header">
-                        <div class="mb-3">
-                          <input type="text" class="form-control" placeholder="To">
+
+                    
+                    <div class="layer w-100 fxg-1 scrollable pos-r">
+                      <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p">
+                        <div class="peer">
+                          <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="" class="w-3r h-3r bdrs-50p">
                         </div>
-                        <div class="mb-3">
-                          <input type="text" class="form-control" placeholder="CC">
-                        </div>
-                        <div class="mb-3">
-                          <input class="form-control" placeholder="Email Subject">
-                        </div>
-                        <div class="mb-3">
-                          <textarea name="compose" class="form-control" placeholder="Say Hi..." rows="10"></textarea>
+                        <div class="peer peer-greed pL-20">
+                          <h6 class="mB-0 lh-1 fw-400">John Doe</h6>
+                          <small class="lh-1 c-green-500">Online</small>
                         </div>
                       </div>
-                      <div id="compose-area"></div>
-                      <div class="text-end mrg-top-30">
-                        <button class="btn btn-danger btn-color">Send</button>
+                      <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p">
+                        <div class="peer">
+                          <img src="https://randomuser.me/api/portraits/men/2.jpg" alt="" class="w-3r h-3r bdrs-50p">
+                        </div>
+                        <div class="peer peer-greed pL-20">
+                          <h6 class="mB-0 lh-1 fw-400">Moo Doe</h6>
+                          <small class="lh-1 c-amber-500">Away</small>
+                        </div>
                       </div>
-                    </form>
+                      <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p">
+                        <div class="peer">
+                          <img src="https://randomuser.me/api/portraits/men/3.jpg" alt="" class="w-3r h-3r bdrs-50p">
+                        </div>
+                        <div class="peer peer-greed pL-20">
+                          <h6 class="mB-0 lh-1 fw-400">Adam Jones</h6>
+                          <small class="lh-1 c-grey-500">Offline</small>
+                        </div>
+                      </div>
+                      <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p">
+                        <div class="peer">
+                          <img src="https://randomuser.me/api/portraits/men/4.jpg" alt="" class="w-3r h-3r bdrs-50p">
+                        </div>
+                        <div class="peer peer-greed pL-20">
+                          <h6 class="mB-0 lh-1 fw-400">Mizo Doe</h6>
+                          <small class="lh-1 c-red-500">Busy</small>
+                        </div>
+                      </div>
+                      <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p">
+                        <div class="peer">
+                          <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="" class="w-3r h-3r bdrs-50p">
+                        </div>
+                        <div class="peer peer-greed pL-20">
+                          <h6 class="mB-0 lh-1 fw-400">John Doe</h6>
+                          <small class="lh-1 c-green-500">Online</small>
+                        </div>
+                      </div>
+                      <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p">
+                        <div class="peer">
+                          <img src="https://randomuser.me/api/portraits/men/2.jpg" alt="" class="w-3r h-3r bdrs-50p">
+                        </div>
+                        <div class="peer peer-greed pL-20">
+                          <h6 class="mB-0 lh-1 fw-400">Moo Doe</h6>
+                          <small class="lh-1 c-amber-500">Away</small>
+                        </div>
+                      </div>
+                      <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p">
+                        <div class="peer">
+                          <img src="https://randomuser.me/api/portraits/men/3.jpg" alt="" class="w-3r h-3r bdrs-50p">
+                        </div>
+                        <div class="peer peer-greed pL-20">
+                          <h6 class="mB-0 lh-1 fw-400">Adam Jones</h6>
+                          <small class="lh-1 c-grey-500">Offline</small>
+                        </div>
+                      </div>
+                      <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p">
+                        <div class="peer">
+                          <img src="https://randomuser.me/api/portraits/men/4.jpg" alt="" class="w-3r h-3r bdrs-50p">
+                        </div>
+                        <div class="peer peer-greed pL-20">
+                          <h6 class="mB-0 lh-1 fw-400">Mizo Doe</h6>
+                          <small class="lh-1 c-red-500">Busy</small>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+
+                
+                <div class="peer peer-greed" id="chat-box">
+                  <div class="layers h-100">
+                    <div class="layer w-100">
+                      
+                      <div class="peers fxw-nw jc-sb ai-c pY-20 pX-30 bgc-white">
+                        <div class="peers ai-c">
+                          <div class="peer d-n@md+">
+                            <a href="" title="" id="chat-sidebar-toggle" class="td-n c-grey-900 cH-blue-500 mR-30">
+                              <i class="ti-menu"></i>
+                            </a>
+                          </div>
+                          <div class="peer mR-20">
+                            <img src="https://randomuser.me/api/portraits/men/12.jpg" alt="" class="w-3r h-3r bdrs-50p">
+                          </div>
+                          <div class="peer">
+                            <h6 class="lh-1 mB-0">John Doe</h6>
+                            <i class="fsz-sm lh-1">Typing...</i>
+                          </div>
+                        </div>
+                        <div class="peers">
+                          <a href="" class="peer td-n c-grey-900 cH-blue-500 fsz-md mR-30" title="">
+                            <i class="ti-video-camera"></i>
+                          </a>
+                          <a href="" class="peer td-n c-grey-900 cH-blue-500 fsz-md mR-30" title="">
+                            <i class="ti-headphone"></i>
+                          </a>
+                          <a href="" class="peer td-n c-grey-900 cH-blue-500 fsz-md" title="">
+                            <i class="ti-more"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="layer w-100 fxg-1 bgc-grey-200 scrollable pos-r">
+                      
+                      <div class="p-20 gapY-15">
+                        
+                        <div class="peers fxw-nw">
+                          <div class="peer mR-20">
+                            <img class="w-2r bdrs-50p" src="https://randomuser.me/api/portraits/men/11.jpg" alt="">
+                          </div>
+                          <div class="peer peer-greed">
+                            <div class="layers ai-fs gapY-5">
+                              <div class="layer">
+                                <div class="peers fxw-nw ai-c pY-3 pX-10 bgc-white bdrs-2 lh-3/2">
+                                  <div class="peer mR-10">
+                                    <small>@{{ message.created_at }}AM</small>
+                                  </div>
+                                  <div class="peer-greed">
+                                    <span>@{{ message.content }}</span>
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              
+                            </div>
+                          </div>
+                        </div>
+
+                        
+                        <div class="peers fxw-nw ai-fe">
+                          <div class="peer ord-1 mL-20">
+                            <img class="w-2r bdrs-50p" src="https://randomuser.me/api/portraits/men/12.jpg" alt="">
+                          </div>
+                          <div class="peer peer-greed ord-0">
+                            <div class="layers ai-fe gapY-10">
+                              <div class="layer">
+                                <div class="peers fxw-nw ai-c pY-3 pX-10 bgc-white bdrs-2 lh-3/2">
+                                  <div class="peer mL-10 ord-1">
+                                    <small>@{{ message.created_at }}</small>
+                                  </div>
+                                  <div class="peer-greed ord-0">
+                                    <span>@{{ message.content }}</span>
+                                  </div>
+                                </div>
+                              </div>
+                             
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                    <div class="layer w-100">
+                      
+                      <div class="p-20 bdT bgc-white">
+                        <div class="pos-r">
+                          <input v-model="newMessage" @keyup.enter="sendMessage" type="text" class="form-control bdrs-10em m-0" placeholder="Say something...">
+                          <button  @click="sendMessage" id="SubmitButton" type="button" class="btn btn-primary bdrs-50p w-2r p-0 h-2r pos-a r-1 t-1 btn-color">
+                            <i class="fa fa-paper-plane-o"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -639,5 +701,73 @@
         </footer>
       </div>
     </div>
+
+    <!-- <script>
+    // JavaScript pour envoyer des messages
+    document.getElementById('sendMessageBtn').addEventListener('click', function () {
+        const messageInput = document.getElementById('messageInput');
+        const content = messageInput.value;
+
+        // Envoyer le message via une requête Ajax
+        axios.post('/send-message', { content: content })
+            .then(response => {
+                console.log(response.data);
+                messageInput.value = ''; // Effacez le champ de saisie après l'envoi
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    });
+</script> -->
+<script>
+    new Vue({
+        el: '#chat-app',
+        data: {
+            messages: [],      // Tableau pour stocker les messages
+            newMessage: '',    // Nouveau message en cours de saisie
+            errors: [],        // Tableau pour stocker les erreurs de validation
+        },
+        mounted() {
+            // Initialiser l'écoute des événements
+            window.Echo.channel('chat')
+                .listen('MessageSent', (event) => {
+                    this.messages.push(event.message);
+                });
+
+            // Charger les messages initiaux lors du montage
+            this.loadMessages();
+        },
+        methods: {
+            loadMessages() {
+                // Logique pour récupérer les messages
+                axios.get('/chat/messages')
+                    .then(response => {
+                        this.messages = response.data.messages;
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors du chargement des messages:', error);
+                    });
+            },
+            sendMessage() {
+                // Envoyer le message au serveur
+                axios.post('/chat', { message: this.newMessage })
+                    .then(response => {
+                        // Réinitialiser l'entrée du message après l'envoi réussi
+                        this.newMessage = '';
+                        // Charger à nouveau les messages pour mettre à jour l'affichage
+                        this.loadMessages();
+                    })
+                    .catch(error => {
+                        // Gérer les erreurs de validation
+                        if (error.response && error.response.status === 422) {
+                            this.errors = Object.values(error.response.data.errors).flat();
+                        } else {
+                            console.error('Erreur lors de l\'envoi du message:', error);
+                        }
+                    });
+            }
+        }
+    });
+</script>
   </body>
 </html>

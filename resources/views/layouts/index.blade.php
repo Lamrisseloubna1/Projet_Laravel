@@ -142,7 +142,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="sidebar-link" href="chat.html">
+              <a class="sidebar-link" href="{{ route('chat') }}">
                 <span class="icon-holder">
                   <i class="c-deep-purple-500 ti-comment-alt"></i>
                 </span>
@@ -158,12 +158,13 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="sidebar-link" href="forms.html">
+            <a class="sidebar-link" href="{{ route('tasks.show') }}">
+
                 <span class="icon-holder">
                   <i class="c-light-blue-500 ti-pencil"></i>
                 </span>
-                <span class="title">Forms</span>
-              </a>
+                <span class="title">Tasks</span>
+            </a>
             </li>
             <li class="nav-item dropdown">
               <a class="sidebar-link" href="ui.html">
@@ -466,7 +467,7 @@
                     <img class="w-2r bdrs-50p" src="https://randomuser.me/api/portraits/men/10.jpg" alt="">
                   </div>
                   <div class="peer">
-                    <span class="fsz-sm c-grey-900">John Doe</span>
+                    <span class="fsz-sm c-grey-900">{{ Auth::user()->name }}</span>
                   </div>
                 </a>
                 <ul class="dropdown-menu fsz-sm">
@@ -477,23 +478,24 @@
                     </a>
                   </li>
                   <li>
-                    <a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                    <a href="{{ route('profile') }}" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
                       <i class="ti-user mR-10"></i>
                       <span>Profile</span>
                     </a>
                   </li>
                   <li>
-                    <a href="email.html" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                    <a href="{{ route('chat')}}" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
                       <i class="ti-email mR-10"></i>
                       <span>Messages</span>
                     </a>
                   </li>
                   <li role="separator" class="divider"></li>
                   <li>
-                    <a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                      <i class="ti-power-off mR-10"></i>
-                      <span>Logout</span>
-                    </a>
+            <a href="{{ route('logout') }}" onclick="logout(event)" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                <i class="ti-power-off mR-10"></i>
+                <span>Logout</span>
+            </a>
+       
                   </li>
                 </ul>
               </li>
@@ -501,6 +503,24 @@
           </div>
         </div>
 
+
+        <script>
+    function logout(event) {
+        event.preventDefault();
+        var form = document.createElement('form');
+        form.action = "{{ route('logout') }}";
+        form.method = 'POST';
+
+        var csrfToken = document.createElement('input');
+        csrfToken.type = 'hidden';
+        csrfToken.name = '_token';
+        csrfToken.value = '{{ csrf_token() }}';
+
+        form.appendChild(csrfToken);
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>
         <!-- ### $App Screen Content ### -->
         <main class="main-content bgc-grey-100">
           <div id="mainContent">
