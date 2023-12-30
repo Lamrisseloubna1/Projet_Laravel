@@ -14,17 +14,21 @@ class Task extends Model
     protected $fillable = ['title', 'description', 'status', 'due_date', 'assigned_to', 'team_id','created_at','updated_at'];
     protected $table = 'tasks';
 
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
+
+    // Define the relationship where a task is assigned to a user
     public function assignedUser()
     {
         return $this->belongsTo(User::class, 'assigned_to');
     }
 
-    public function team()
-    {
-        return $this->belongsTo(Team::class);
+    
     }
  
-}
+
 
 // class Task extends Model
 // {

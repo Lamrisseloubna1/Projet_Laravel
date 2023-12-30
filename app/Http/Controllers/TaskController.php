@@ -12,23 +12,37 @@ use App\Models\Task;
 class TaskController extends Controller
 {
    
-    public function create()
+   /* public function create()
     {
 
-        // Get the currently authenticated user
-    $user = Auth::user();
+             // Get the currently authenticated user
+    // $user = Auth::user();
 
-    // Check if the user is an admin and has a team
-    if ($user->is_admin && $user->team) {
-        // Fetch tasks related to the admin's team
-        $tasks = Task::where('team_id', $user->team->id)->get();
-    } else {
-        // If the user is not an admin or doesn't have a team, fetch all tasks
-        $tasks = Task::all();
-    }
+    // // Check if the user is an admin and has a team
+    // if ($user->is_admin && $user->team) {
+    //     // Fetch tasks related to the admin's team
+    //     $tasks = Task::where('team_id', $user->team->id)->get();
+    // } else {
+    //     // If the user is not an admin or doesn't have a team, fetch all tasks
+    //     $tasks = Task::all();
+    // }
 
-    return view('tasks.create', ['tasks' => $tasks]);
-        // return view('tasks.create');
+    // return view('tasks.create', ['tasks' => $tasks]);
+ 
+    // }
+    
+    }*/
+    public function create()
+    {
+        $user = Auth::user();
+
+        // Check if the user is an admin and has a team
+        if ($user->is_admin && $user->team) {
+            // Retrieve tasks related to the team members
+            $tasks = Task::where('team_id', $user->team->id)->with('assignedUser')->get();
+
+            return view('tasks.create', ['tasks' => $tasks]);
+        }
     }
     
     
@@ -50,11 +64,21 @@ class TaskController extends Controller
     public function show()
 
     {
-        // Get the currently authenticated user
+       // Get the currently authenticated user
         $user = Auth::user();
         $tasks = $user->tasks()->with('team')->get();
 
     return view('tasks.forms', ['tasks' => $tasks]);
+         // Get the currently authenticated user
+        //   $user = Auth::user();
+
+        //  // Check if the user is an admin and has a team
+        // if ($user->is_admin && $user->team) {
+        // // Retrieve tasks related to the team
+        // $tasks = $user->team->tasks()->with('team')->get();
+
+        // return view('tasks.forms', ['tasks' => $tasks]);
+        // }
        
     }
     
