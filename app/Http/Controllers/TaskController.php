@@ -32,23 +32,44 @@ class TaskController extends Controller
     // }
     
     }*/
-
     
-    public function create()
-{
-    $user = Auth::user();
+        // Handle the case where the user is not an admin or doesn't have a team
+        // You might want to redirect or show an error message in this case
+    
+        public function create()
+        {
+            // Get the currently authenticated user
+            $user = Auth::user();
+    
+    
+            // Check if the user is an admin and has a team
+            if ($user->is_admin && $user->team) {
+                // Retrieve tasks related to the team members
+                $tasks = Task::where('team_id', $user->team->id)->with('admin')->get();
+    
+                return view('tasks.create', ['tasks' => $tasks]);
+            }
+    
+        }
+    
+    
 
-    // Check if the user is an admin and has a team
-    if ($user->is_admin && $user->team) {
-        // Debugging: Dump the team ID and die
-        dd($user->team->id);
-
-        // Retrieve tasks related to the team members
-        $tasks = Task::where('team_id', $user->team->id)->with('assignedUser')->get();
-
-        return view('tasks.create', ['tasks' => $tasks, 'admin' => $admin]);
-    }
-}
+    // public function create()
+    // {
+    //     $user = Auth::user();
+    //     dd($user->id);
+    //     // Debugging: Dump the team ID and die
+    //     dd($user->team->id);
+    
+    //     // Check if the user is an admin and has a team
+    //     if ($user->is_admin && $user->team) {
+    //         // Retrieve tasks related to the team members
+    //         $tasks = Task::where('team_id', $user->team->id)->with('assignedUser')->get();
+    
+    //         return view('tasks.create', ['tasks' => $tasks]);
+    //     }
+    // }
+    
 //     public function create()
 // {
 //     $user = Auth::user();
@@ -77,6 +98,7 @@ class TaskController extends Controller
     {
         // Delete the task from the database
     }
+     
 
     public function show()
 

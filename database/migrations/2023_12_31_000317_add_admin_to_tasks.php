@@ -9,22 +9,19 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
-        Schema::table('teams', function (Blueprint $table) {
-            $table->unsignedBigInteger('admin')->nullable();
-
-            // Add a foreign key constraint
-            $table->foreign('admin')->references('id')->on('users')->onDelete('set null');
+        Schema::table('tasks', function (Blueprint $table) {
+            $table->foreignId('admin')->nullable()->constrained('users');
         });
     }
 
     /**
      * Reverse the migrations.
      */
-    public function down()
+    public function down(): void
     {
-        Schema::table('teams', function (Blueprint $table) {
+        Schema::table('tasks', function (Blueprint $table) {
             $table->dropForeign(['admin']);
             $table->dropColumn('admin');
         });
