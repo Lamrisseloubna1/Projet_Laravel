@@ -31,7 +31,7 @@ Route::post('forgot-password', [App\Http\Controllers\ForgotPasswordController::c
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::post('/profile', [App\Http\Controllers\Auth\ProfileController::class,'profile'])->name('profile');
+    Route::post('/profil', [App\Http\Controllers\Auth\ProfileController::class,'profil'])->name('profil');
     Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class,'logout'])->name('logout');
     Route::resource('tasks', TaskController::class);
     Route::get('/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
@@ -40,8 +40,5 @@ Route::middleware(['auth'])->group(function () {
     // ->name('tasks.markCompleted');
     // Define the route for updating the status of a task
     Route::patch('/tasks/{task}/update-status', [TaskController::class, 'updateStatus'])->name('tasks.updateStatus');
-    Route::get('/chat', [App\Http\Controllers\ChatController::class,'index'])->name('chat');
-    Route::post('/chat/send', [App\Http\Controllers\ChatController::class,'sendMessage'])->name('chat.sendMessage');
-    Route::get('/chat/messages',  [App\Http\Controllers\ChatController::class,'getMesssage'])->name('chat.getMessage');
-
+    
 });
