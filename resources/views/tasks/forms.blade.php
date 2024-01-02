@@ -688,15 +688,8 @@
       </div>
     
     </div>
-    
-    <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600">
-          <span>Copyright © 2021 Designed by <a href="https://colorlib.com" target="_blank" title="Colorlib">Colorlib</a>. All rights reserved.</span>
-        </footer>
-
-
-
-           
-
+    <footer></footer>
+  
         <script>
          function deleteTask(taskId) {
         // Confirm deletion
@@ -739,44 +732,51 @@
         });
     }
 
-    <script>
-    // ... your other JavaScript code ...
+    function openEditModal(taskId) {
+        // Fetch the content of edit.blade.php using AJAX
+        fetch(`/tasks/${taskId}/edit`, {
+            method: 'GET',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            },
+        })
+        .then(response => response.text())
+        .then(formHtml => {
+            // Inject the formHtml into the modal content
+            $('#editModalContent').html(formHtml);
+            // Show the modal
+            $('#editModal').modal('show');
 
-    function openEditModal(formHtml) {
-        // Inject the formHtml into the modal content
-        $('#editModalContent').html(formHtml);
-        // Show the modal
-        $('#editModal').modal('show');
+            // Attach a submit event listener to the form
+            $('#editTaskForm').on('submit', function (event) {
+                event.preventDefault();
 
-        // Attach a submit event listener to the form
-        $('#editTaskForm').on('submit', function (event) {
-            event.preventDefault();
+                // Perform the AJAX request to update the task
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: 'POST',
+                    data: new FormData(this),
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        console.log('Task updated:', data);
 
-            // Perform the AJAX request to update the task
-            $.ajax({
-                url: $(this).attr('action'),
-                type: 'POST',
-                data: new FormData(this),
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    console.log('Task updated:', data);
+                        // Close the modal
+                        $('#editModal').modal('hide');
 
-                    // Close the modal
-                    $('#editModal').modal('hide');
-
-                    // Optionally, you can update the UI here (e.g., update the task details in the table)
-                },
-                error: function (error) {
-                    console.error('Error updating task:', error);
-                    // Handle the error, show a message, etc.
-                }
+                        // Optionally, you can update the UI here (e.g., update the task details in the table)
+                    },
+                    error: function (error) {
+                        console.error('Error updating task:', error);
+                        // Handle the error, show a message, etc.
+                    }
+                });
             });
+        })
+        .catch(error => {
+            console.error('Error fetching task data for editing:', error);
         });
     }
-</script>
-
-
 </script>
 
 
