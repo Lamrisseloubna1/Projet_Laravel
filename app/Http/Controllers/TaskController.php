@@ -12,33 +12,112 @@ use App\Models\Task;
 class TaskController extends Controller
 {
    
-
-//     public function index()
-// {
-//     $tasks = Task::all();
-
-//     return view('tasks.show', ['tasks' => $tasks]);
-// }
-
-    // public function index()
-    // {
-    //     $tasks = Task::all();
-    //     return view('tasks.index', compact('tasks'));
-    // }
-    public function create()
+   /* public function create()
     {
-        return view('tasks.create');
+
+             // Get the currently authenticated user
+    // $user = Auth::user();
+
+    // // Check if the user is an admin and has a team
+    // if ($user->is_admin && $user->team) {
+    //     // Fetch tasks related to the admin's team
+    //     $tasks = Task::where('team_id', $user->team->id)->get();
+    // } else {
+    //     // If the user is not an admin or doesn't have a team, fetch all tasks
+    //     $tasks = Task::all();
+    // }
+
+    // return view('tasks.create', ['tasks' => $tasks]);
+ 
+    // }
+    
+    }*/
+    
+        // Handle the case where the user is not an admin or doesn't have a team
+        // You might want to redirect or show an error message in this case
+    
+        public function create()
+        {
+            // Get the currently authenticated user
+            $user = Auth::user();
+    
+    
+            // Check if the user is an admin and has a team
+            if ($user->is_admin && $user->team) {
+                // Retrieve tasks related to the team members
+                $tasks = Task::where('team_id', $user->team->id)->with('admin')->get();
+    
+                return view('tasks.create', ['tasks' => $tasks]);
+            }
+    
+        }
+    
+    
+
+    // public function create()
+    // {
+    //     $user = Auth::user();
+    //     dd($user->id);
+    //     // Debugging: Dump the team ID and die
+    //     dd($user->team->id);
+    
+    //     // Check if the user is an admin and has a team
+    //     if ($user->is_admin && $user->team) {
+    //         // Retrieve tasks related to the team members
+    //         $tasks = Task::where('team_id', $user->team->id)->with('assignedUser')->get();
+    
+    //         return view('tasks.create', ['tasks' => $tasks]);
+    //     }
+    // }
+    
+//     public function create()
+// {
+//     $user = Auth::user();
+
+//     // Check if the user is an admin and has a team
+//     if ($user->is_admin && $user->team) {
+//         // Retrieve tasks related to the team members
+//         $tasks = Task::where('team_id', $user->team->id)->get();
+
+//         return view('tasks.create', ['tasks' => $tasks]);
+//     }
+// }
+    
+    
+    public function edit(Task $task)
+    {
+        // Display the form to edit an existing task
     }
+    
+    public function update(Request $request, Task $task)
+    {
+        // Update the task in the database
+    }
+    
+    public function destroy(Task $task)
+    {
+        // Delete the task from the database
+    }
+     
 
     public function show()
 
     {
-       
-        // Get the currently authenticated user
+       // Get the currently authenticated user
         $user = Auth::user();
-         $tasks = $user->tasks()->with('team')->get();
+        $tasks = $user->tasks()->with('team')->get();
 
     return view('tasks.forms', ['tasks' => $tasks]);
+         // Get the currently authenticated user
+        //   $user = Auth::user();
+
+        //  // Check if the user is an admin and has a team
+        // if ($user->is_admin && $user->team) {
+        // // Retrieve tasks related to the team
+        // $tasks = $user->team->tasks()->with('team')->get();
+
+        // return view('tasks.forms', ['tasks' => $tasks]);
+        // }
        
     }
     
@@ -55,14 +134,7 @@ class TaskController extends Controller
         // Redirect back with a success message
         return redirect()->back()->with('success', 'Status updated successfully!');
     }
-    // public function markCompleted(Task $task)
-    // {
-    //     // Add logic to mark the task as completed
-    //     $task->update(['status' => 'completed']);
-
-    //     // Redirect back or to the task list page
-    //     return redirect()->back()->with('success', 'Task marked as completed.');
-    // }
+    
 
     public function store(Request $request)
     {
@@ -83,4 +155,4 @@ class TaskController extends Controller
         // Rediriger vers la page d'accueil ou une autre page après la création
         return redirect()->route('home')->with('success', 'Task created successfully!');
     }
-}
+  }

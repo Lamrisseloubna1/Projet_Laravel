@@ -142,7 +142,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="sidebar-link" href="{{ route('chat') }}">
+              <a class="sidebar-link" href="{{ route('chatify') }}">
                 <span class="icon-holder">
                   <i class="c-deep-purple-500 ti-comment-alt"></i>
                 </span>
@@ -150,11 +150,11 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="sidebar-link" href="charts.html">
+              <a class="sidebar-link" href="profil">
                 <span class="icon-holder">
-                  <i class="c-indigo-500 ti-bar-chart"></i>
+                  <i class="c-indigo-500 ti-user"></i>
                 </span>
-                <span class="title">Charts</span>
+                <span class="title">Profil</span>
               </a>
             </li>
             <li class="nav-item">
@@ -478,13 +478,13 @@
                     </a>
                   </li>
                   <li>
-                    <a href="{{ route('profile') }}" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                    <a href="{{ route('profil') }}" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
                       <i class="ti-user mR-10"></i>
-                      <span>Profile</span>
+                      <span>Profil</span>
                     </a>
                   </li>
                   <li>
-                    <a href="{{ route('chat')}}" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                    <a href="{{ route('chatify')}}" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
                       <i class="ti-email mR-10"></i>
                       <span>Messages</span>
                     </a>

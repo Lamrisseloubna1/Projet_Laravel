@@ -536,7 +536,7 @@
                     <img class="w-2r bdrs-50p" src="https://randomuser.me/api/portraits/men/10.jpg" alt="">
                   </div>
                   <div class="peer">
-                    <span class="fsz-sm c-grey-900">John Doe</span>
+                    <span class="fsz-sm c-grey-900">{{ Auth::user()->name }}</span>
                   </div>
                 </a>
                 <ul class="dropdown-menu fsz-sm">
@@ -648,6 +648,7 @@
                                         </form>
                                         
                                     </td>
+                                    
                                 </tr>
                                 @endforeach
                             </tbody>
