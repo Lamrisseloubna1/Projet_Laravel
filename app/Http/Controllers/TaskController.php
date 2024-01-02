@@ -108,7 +108,7 @@ class TaskController extends Controller
         $tasks = $user->tasks()->with('team')->get();
 
     return view('tasks.forms', ['tasks' => $tasks]);
-         // Get the currently authenticated user
+        // Get the currently authenticated user
         //   $user = Auth::user();
 
         //  // Check if the user is an admin and has a team
@@ -135,7 +135,6 @@ class TaskController extends Controller
         return redirect()->back()->with('success', 'Status updated successfully!');
     }
     
-
     public function store(Request $request)
     {
         // Valider les données du formulaire
