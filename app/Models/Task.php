@@ -20,10 +20,10 @@ class Task extends Model
     }
 
 
-    // public function team()
-    // {
-    //     return $this->belongsTo(Team::class, 'team_id');
-    // }
+    public function team()
+    {
+        return $this->belongsTo(Team::class, 'team_id');
+    }
     
 
     // // Define the relationship where a task is assigned to a user
