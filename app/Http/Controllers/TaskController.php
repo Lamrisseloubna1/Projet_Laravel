@@ -11,117 +11,87 @@ use App\Models\Task;
 
 class TaskController extends Controller
 {
-   
-   /* public function create()
-    {
+    
+        // public function create()
+        // {
 
-             // Get the currently authenticated user
-    // $user = Auth::user();
+        // // Assuming you have authenticated user
+        // $user = Auth::user();
 
-    // // Check if the user is an admin and has a team
-    // if ($user->is_admin && $user->team) {
-    //     // Fetch tasks related to the admin's team
-    //     $tasks = Task::where('team_id', $user->team->id)->get();
-    // } else {
-    //     // If the user is not an admin or doesn't have a team, fetch all tasks
-    //     $tasks = Task::all();
-    // }
+        // // Retrieve tasks for the team of the currently authenticated user
+        // $tasks = Task::where('team_id', $user->team->id)->get();
 
-    // return view('tasks.create', ['tasks' => $tasks]);
- 
-    // }
-    
-    }*/
-    
-        // Handle the case where the user is not an admin or doesn't have a team
-        // You might want to redirect or show an error message in this case
-    
-        public function create()
-        {
-            // Get the currently authenticated user
-            $user = Auth::user();
-    
-    
-            // Check if the user is an admin and has a team
-            if ($user->is_admin && $user->team) {
-                // Retrieve tasks related to the team members
-                $tasks = Task::where('team_id', $user->team->id)->with('admin')->get();
-    
-                return view('tasks.create', ['tasks' => $tasks]);
-            }
-    
-        }
-    
-    
+        // // Your existing code...
 
-    // public function create()
-    // {
-    //     $user = Auth::user();
-    //     dd($user->id);
-    //     // Debugging: Dump the team ID and die
-    //     dd($user->team->id);
-    
-    //     // Check if the user is an admin and has a team
-    //     if ($user->is_admin && $user->team) {
-    //         // Retrieve tasks related to the team members
-    //         $tasks = Task::where('team_id', $user->team->id)->with('assignedUser')->get();
-    
-    //         return view('tasks.create', ['tasks' => $tasks]);
-    //     }
-    // }
-    
-//     public function create()
-// {
-//     $user = Auth::user();
+        // return view('your-view', ['tasks' => $tasks]);
 
-//     // Check if the user is an admin and has a team
-//     if ($user->is_admin && $user->team) {
-//         // Retrieve tasks related to the team members
-//         $tasks = Task::where('team_id', $user->team->id)->get();
-
-//         return view('tasks.create', ['tasks' => $tasks]);
-//     }
-// }
     
-    
-    public function edit(Task $task)
-    {
-        // Display the form to edit an existing task
-    }
-    
-    public function update(Request $request, Task $task)
-    {
-        // Update the task in the database
-    }
-    
-    public function destroy(Task $task)
-    {
-        // Delete the task from the database
-    }
-     
-
-    public function show()
-
-    {
-       // Get the currently authenticated user
-        $user = Auth::user();
-        $tasks = $user->tasks()->with('team')->get();
-
-    return view('tasks.forms', ['tasks' => $tasks]);
-         // Get the currently authenticated user
-        //   $user = Auth::user();
-
-        //  // Check if the user is an admin and has a team
-        // if ($user->is_admin && $user->team) {
-        // // Retrieve tasks related to the team
-        // $tasks = $user->team->tasks()->with('team')->get();
-
-        // return view('tasks.forms', ['tasks' => $tasks]);
         // }
        
-    }
+       
+        public function index()
+        {
+
+            $tasks = Task::all();
+            return view('forms', ['tasks' => $tasks]);
+          
+        }
+        
+        
+        
+          public function show(Task $tasks)
+        {
+            $tasks = Task::all();
+            return view('tasks.forms',['tasks' => $tasks]);
+
+        }
+
+
+
+        public function create()
+       {
+
+         return view('tasks.forms');
+
+        }
+
+        public function store(Request $request)
+
+        {
+            $task = new Task($request->all());
+            auth()->user()->tasks()->save($task);
+
+            return redirect()->route('tasks.index');
+
+        }
+
+        public function edit(Task $task)
+        {
+            // Assuming you have an "edit.blade.php" file in the "resources/views/tasks" directory
+            return view('tasks.edit', compact('task'));
+        }
+
+        // public function update(Request $request, Task $task)
+
+        // {
+        
+        //     $task->update($request->all());
+        //     return redirect()->route('tasks.index')->with('success', 'Task updated successfully');
+
+        // }
+
+        public function destroy(Task $task)
+
+        {
+
+            $task->delete();
+            return redirect()->route('tasks.index')->with('success', 'Task deleted successfully');
+
+         }
+
+
     
-    public function updateStatus(Request $request, Task $task)
+      public function updateStatus(Request $request, Task $task)
     {
         // Validate the request
         $request->validate([
@@ -133,26 +103,36 @@ class TaskController extends Controller
 
         // Redirect back with a success message
         return redirect()->back()->with('success', 'Status updated successfully!');
-    }
+     }
     
+    
+       public function update(Request $request, Task $task)
+       {
 
-    public function store(Request $request)
-    {
-        // Valider les données du formulaire
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'due_date' => 'nullable|date',
-        ]);
+        $task->update($request->all());
+        return redirect()->route('tasks.index')->with('success', 'Task updated successfully');
 
-        // Créer une nouvelle tâche
-        Task::create([
-            'title' => $request->input('title'),
-            'description' => $request->input('description'),
-            'due_date' => $request->input('due_date'),
-        ]);
-
-        // Rediriger vers la page d'accueil ou une autre page après la création
-        return redirect()->route('home')->with('success', 'Task created successfully!');
+       }
+    
     }
-  }
+
+    // public function store(Request $request)
+    // {
+    //     // Valider les données du formulaire
+    //     $request->validate([
+    //         'title' => 'required|string|max:255',
+    //         'description' => 'nullable|string',
+    //         'due_date' => 'nullable|date',
+    //     ]);
+
+    //     // Créer une nouvelle tâche
+    //     Task::create([
+    //         'title' => $request->input('title'),
+    //         'description' => $request->input('description'),
+    //         'due_date' => $request->input('due_date'),
+    //     ]);
+
+    //     // Rediriger vers la page d'accueil ou une autre page après la création
+    //     return redirect()->route('home')->with('success', 'Task created successfully!');
+    // }
+  

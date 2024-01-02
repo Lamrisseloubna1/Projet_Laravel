@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
@@ -19,11 +21,16 @@ class Task extends Model
         return $this->belongsTo(User::class, 'admin');
     }
 
-
     // public function team()
     // {
-    //     return $this->belongsTo(Team::class, 'team_id');
+    //     return $this->belongsTo(Team::class);
     // }
+
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class, 'team_id');
+    }
     
 
     // // Define the relationship where a task is assigned to a user

@@ -228,7 +228,9 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="sidebar-link" href="{{ route('tasks.show') }}">
+              
+              <a href="{{ route('tasks.index')}}">
+
                 <span class="icon-holder">
                   <i class="c-light-blue-500 ti-pencil"></i>
                 </span>
@@ -603,34 +605,37 @@
                                     <th class="text-center">
                                         <span><i class="fa fa-check-square status-icon"></i> Select status</span>
                                     </th>
+                                    <th class="text-center">
+                                        <span><i class="fa fa-check-square status-icon"></i> Actions</span>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($tasks as $task)
                                 <tr>
-                                    <td class="user-link">
+                                    <td class="user-link" id="edit-task-title">
                                         {{ $task->title }}
                                     </td>
-                                    <td>
+                                    <td  id="edit-task-status">
                                         {{ $task->status }}
                                        
                                         <!-- Display the actual status -->
                                          <!-- {{ ucfirst($task->status) }} -->
        
                                     </td>
-                                    <td>
+                                    <td id="edit-task-description">
                                         {{ $task->description }}
                                     </td>
-                                    <td>
+                                    <td  id="edit-task-due_date">
                                         {{ $task->due_date }}
                                     </td>
-                                    <td>
+                                    <td id="edit-task-team">
                                         {{ $task->team->name ?? 'N/A' }}
                                     </td>
-                                    <td>
+                                    <td id="edit-task-created_at">
                                         {{ $task->created_at }}
                                     </td>
-                                    <td>
+                                    <td id="edit-task-updated_at">
                                         {{ $task->updated_at }}
                                     </td>
                                     <td class="checkbox-container">
@@ -648,6 +653,22 @@
                                         </form>
                                         
                                     </td>
+                                         
+                                    <td style="width: 20%;">
+<a href="javascript:void(0);" class="edit-task" data-task-id="{{ $task->id }}" onclick="editTask('{{ $task->id }}')">
+    <span class="fa-stack">
+        <i class="fa fa-square fa-stack-2x"></i>
+        <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+    </span>
+</a>
+
+    <a href="javascript:void(0);" class="table-link delete-task" onclick="deleteTask({{ $task->id }})">
+        <span class="fa-stack">
+            <i class="fa fa-square fa-stack-2x"></i>
+            <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+        </span>
+    </a>
+</td>
                                     
                                 </tr>
                                 @endforeach
@@ -671,5 +692,94 @@
     <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600">
           <span>Copyright © 2021 Designed by <a href="https://colorlib.com" target="_blank" title="Colorlib">Colorlib</a>. All rights reserved.</span>
         </footer>
+
+
+
+           
+
+        <script>
+         function deleteTask(taskId) {
+        // Confirm deletion
+        if (confirm('Are you sure you want to delete this task?')) {
+            // Make an AJAX request to delete the task
+            fetch(`/tasks/${taskId}`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response, you can update the UI or show a message
+                console.log('Task deleted:', data);
+                // For example, you might want to reload the page
+                location.reload();
+            })
+            .catch(error => {
+                console.error('Error deleting task:', error);
+            });
+        }
+    }
+
+    function editTask(taskId) {
+        // Fetch the task data using AJAX
+        fetch(`/tasks/${taskId}/edit`, {
+            method: 'GET',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            },
+        })
+        .then(response => response.text())
+        .then(formHtml => {
+            // Open the edit modal and inject the formHtml
+            openEditModal(formHtml);
+        })
+        .catch(error => {
+            console.error('Error fetching task data for editing:', error);
+        });
+    }
+
+    <script>
+    // ... your other JavaScript code ...
+
+    function openEditModal(formHtml) {
+        // Inject the formHtml into the modal content
+        $('#editModalContent').html(formHtml);
+        // Show the modal
+        $('#editModal').modal('show');
+
+        // Attach a submit event listener to the form
+        $('#editTaskForm').on('submit', function (event) {
+            event.preventDefault();
+
+            // Perform the AJAX request to update the task
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                data: new FormData(this),
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    console.log('Task updated:', data);
+
+                    // Close the modal
+                    $('#editModal').modal('hide');
+
+                    // Optionally, you can update the UI here (e.g., update the task details in the table)
+                },
+                error: function (error) {
+                    console.error('Error updating task:', error);
+                    // Handle the error, show a message, etc.
+                }
+            });
+        });
+    }
+</script>
+
+
+</script>
+
+
+
   </body>
 </html>
