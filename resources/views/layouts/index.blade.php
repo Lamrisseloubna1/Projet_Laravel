@@ -150,7 +150,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="sidebar-link" href="profil">
+              <a class="sidebar-link" href="profile">
                 <span class="icon-holder">
                   <i class="c-indigo-500 ti-user"></i>
                 </span>
@@ -478,7 +478,7 @@
                     </a>
                   </li>
                   <li>
-                    <a href="{{ route('profil') }}" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                    <a href="{{ route('profile') }}" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
                       <i class="ti-user mR-10"></i>
                       <span>Profil</span>
                     </a>

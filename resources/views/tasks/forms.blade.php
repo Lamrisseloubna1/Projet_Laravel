@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
     <title>Forms</title>
     <style>
          body {
@@ -549,7 +551,7 @@
                     </a>
                   </li>
                   <li>
-                    <a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                    <a href="{{ route('profile') }}" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
                       <i class="ti-user mR-10"></i>
                       <span>Profile</span>
                     </a>
@@ -653,9 +655,8 @@
                                         </form>
                                         
                                     </td>
-                                         
-                                    <td style="width: 20%;">
-<a href="javascript:void(0);" class="edit-task" data-task-id="{{ $task->id }}" onclick="editTask('{{ $task->id }}')">
+<td>                                         
+<a href="javascript:void(0);" class="table-link edit-task" onclick="editTask({{ $task->id }})">
     <span class="fa-stack">
         <i class="fa fa-square fa-stack-2x"></i>
         <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
@@ -673,22 +674,35 @@
                                 </tr>
                                 @endforeach
                             </tbody>
+
                         </table>
+      
+                       
+               
                     </div>
                 </div>
             </div>
         </div>
     </div>
     </center>
+  
    
         </div>
 
             
        
       </div>
-    
+      <div class="modal fade" id="editTaskModal" tabindex="-1" role="dialog" aria-labelledby="editTaskModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!-- The content of the modal will be injected here -->
+        </div>
     </div>
-    <footer></footer>
+</div>
+    </div>
+    <footer>
+  
+    </footer>
   
         <script>
          function deleteTask(taskId) {
@@ -715,68 +729,24 @@
     }
 
     function editTask(taskId) {
-        // Fetch the task data using AJAX
-        fetch(`/tasks/${taskId}/edit`, {
-            method: 'GET',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-            },
-        })
-        .then(response => response.text())
-        .then(formHtml => {
-            // Open the edit modal and inject the formHtml
-            openEditModal(formHtml);
-        })
-        .catch(error => {
-            console.error('Error fetching task data for editing:', error);
-        });
-    }
-
-    function openEditModal(taskId) {
-        // Fetch the content of edit.blade.php using AJAX
-        fetch(`/tasks/${taskId}/edit`, {
-            method: 'GET',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-            },
-        })
-        .then(response => response.text())
-        .then(formHtml => {
+    // Fetch the task data using synchronous AJAX
+    $.ajax({
+        url: `/tasks/${taskId}/edit`,
+        method: 'GET',
+        async: false, // Make the request synchronous
+        success: function (formHtml) {
             // Inject the formHtml into the modal content
-            $('#editModalContent').html(formHtml);
-            // Show the modal
-            $('#editModal').modal('show');
-
-            // Attach a submit event listener to the form
-            $('#editTaskForm').on('submit', function (event) {
-                event.preventDefault();
-
-                // Perform the AJAX request to update the task
-                $.ajax({
-                    url: $(this).attr('action'),
-                    type: 'POST',
-                    data: new FormData(this),
-                    processData: false,
-                    contentType: false,
-                    success: function (data) {
-                        console.log('Task updated:', data);
-
-                        // Close the modal
-                        $('#editModal').modal('hide');
-
-                        // Optionally, you can update the UI here (e.g., update the task details in the table)
-                    },
-                    error: function (error) {
-                        console.error('Error updating task:', error);
-                        // Handle the error, show a message, etc.
-                    }
-                });
-            });
-        })
-        .catch(error => {
+            $('#editTaskModal .modal-content').html(formHtml);
+            
+            // Open the modal
+            $('#editTaskModal').modal('show');
+        },
+        error: function (error) {
             console.error('Error fetching task data for editing:', error);
-        });
-    }
+        }
+    });
+}
+
 </script>
 
 

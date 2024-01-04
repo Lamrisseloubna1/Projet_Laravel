@@ -10,22 +10,19 @@
                     <div class="card-header">Edit Task</div>
 
                     <div class="card-body">
-                    <form id="editTaskForm" action="{{ route('tasks.update', ['task' => $task->id]) }}" method="POST">
+                        <form id="editTaskModal" action="{{ route('tasks.update', ['task' => $task->id]) }}" method="POST">
+
                             @csrf
                             @method('PATCH')
 
-                            <!-- Add your form fields here based on your Task model -->
-
                             <div class="form-group">
-                                <label for="name">Task Name</label>
+                                <label for="name">Task</label>
                                 <input type="text" class="form-control" id="name" name="name" value="{{ $task->name }}" required>
                             </div>
 
-
-
                             <!-- Add more form fields based on your Task model -->
 
-                            <button type="submit"  data-task-id="{{ $task->id }}" class="btn btn-primary">Update Task</button>
+                            <button type="submit" class="btn btn-primary">Update Task</button>
                         </form>
                     </div>
                 </div>

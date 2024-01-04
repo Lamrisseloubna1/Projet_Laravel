@@ -70,7 +70,29 @@ class TaskController extends Controller
             // Assuming you have an "edit.blade.php" file in the "resources/views/tasks" directory
             return view('tasks.edit', compact('task'));
         }
+               
+        // public function update(Request $request, Task $task)
+        // {
+        //     // Validate the request
+        //     $request->validate([
+        //         'name' => 'required|max:255',
+        //     ]);
+        
+        //     $task->update([
 
+        //         'name' => $request->input('name'),
+        //         // Add other fields as needed
+        //     ]);
+        
+        //     // Redirect or respond as needed
+        //     return redirect()->route('tasks.index')->with('success', 'Task updated successfully');
+
+            
+        // }
+        
+
+        
+       
         // public function update(Request $request, Task $task)
 
         // {
@@ -104,15 +126,32 @@ class TaskController extends Controller
         // Redirect back with a success message
         return redirect()->back()->with('success', 'Status updated successfully!');
      }
+     
+
+     public function update(Request $request, Task $task)
+     {
+         $request->validate([
+             'name' => 'required|max:255',
+             // Add validation rules for other fields if needed
+         ]);
+     
+         $task->update([
+             'name' => $request->name,
+             // Add other fields you want to update here
+         ]);
+     
+         return redirect()->route('tasks.index')->with('success', 'Task updated successfully');
+     }
+     
     
     
-       public function update(Request $request, Task $task)
-       {
+    //    public function update(Request $request, Task $task)
+    //    {
 
-        $task->update($request->all());
-        return redirect()->route('tasks.index')->with('success', 'Task updated successfully');
+    //     $task->update($request->all());
+    //     return redirect()->route('tasks.index')->with('success', 'Task updated successfully');
 
-       }
+    //    }
     
     }
 
