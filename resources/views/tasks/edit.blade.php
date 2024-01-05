@@ -18,6 +18,7 @@
                             <div class="form-group">
                                 <label for="name">Task</label>
                                 <input type="text" class="form-control" id="name" name="name" value="{{ $task->name }}" required>
+
                             </div>
 
                             <!-- Add more form fields based on your Task model -->

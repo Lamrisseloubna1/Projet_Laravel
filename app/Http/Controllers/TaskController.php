@@ -140,7 +140,7 @@ class TaskController extends Controller
              // Add other fields you want to update here
          ]);
      
-         return redirect()->route('tasks.index')->with('success', 'Task updated successfully');
+         return redirect()->back()->with('success', 'Task updated successfully');
      }
      
     
